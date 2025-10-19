@@ -1,20 +1,19 @@
-FROM openjdk:21-jdk-slim AS builder
+FROM maven:3-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
-COPY mvnw .
-COPY .mvn .mvn
 COPY pom.xml .
-RUN ./mvnw dependency:go-offline
+
+RUN mvn dependency:go-offline
 
 COPY src src
-RUN ./mvnw package -DskipTests
+RUN mvn package -DskipTests
 
 FROM openjdk:21-jdk-slim
 WORKDIR /app
 
-COPY --from=builder /app/target/*.jar auth_service.jar
+COPY --from=builder /app/target/Auth-Service-v1.0.jar Auth-Service-v1.0.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","auth_service.jar"]
+ENTRYPOINT ["java","-jar","Auth-Service-v1.0.jar"]
