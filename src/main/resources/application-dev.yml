@@ -1,4 +1,5 @@
 app:
+  version: @project.version@
   jwt:
     access-token-ttl-ms: 900_000      #15 minutes
     refresh-token-ttl-ms: 604_800_000 #1 week

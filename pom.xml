@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>city.pulse</groupId>
 	<artifactId>Auth-Service</artifactId>
-	<version>v1.0</version>
+	<version>1.0</version>
 	<name>Auth-Service</name>
 	<description>Spring Boot </description>
 	<url/>

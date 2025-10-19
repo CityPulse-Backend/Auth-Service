@@ -3,6 +3,7 @@ package city.pulse.auth_service.feature.auth.login.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -53,6 +54,9 @@ class AuthControllerTest {
     @MockitoBean
     private JwtDecoder jwtDecoder;
 
+    @Value("${app.version}")
+    private String apiVersion;
+
     @Test
     void shouldLoginSuccessfullyAndReturnTokens() throws Exception {
         var loginRequest = new LoginRequestDTO("user", "password");
@@ -60,7 +64,7 @@ class AuthControllerTest {
 
         when(loginService.login("user", "password")).thenReturn(loginResponse);
 
-        mockMvc.perform(post("/api/v1/auth/login")
+        mockMvc.perform(post("/api/v" + apiVersion + "/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk())
@@ -78,7 +82,7 @@ class AuthControllerTest {
 
         when(loginService.refresh(validToken)).thenReturn(loginResponse);
 
-        mockMvc.perform(post("/api/v1/auth/refresh")
+        mockMvc.perform(post("/api/v" + apiVersion + "/auth/refresh")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(refreshTokenRequest)))
                 .andExpect(status().isOk())
@@ -95,7 +99,7 @@ class AuthControllerTest {
 
         doNothing().when(loginService).logout(validToken);
 
-        mockMvc.perform(post("/api/v1/auth/logout")
+        mockMvc.perform(post("/api/v" + apiVersion + "/auth/logout")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(refreshTokenRequest)))
                 .andExpect(status().isNoContent());
@@ -107,7 +111,7 @@ class AuthControllerTest {
     void shouldReturnBadRequestWhenLoginBodyIsInvalid() throws Exception {
         var invalidLoginRequest = new LoginRequestDTO("", "password");
 
-        mockMvc.perform(post("/api/v1/auth/login")
+        mockMvc.perform(post("/api/v" + apiVersion + "/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidLoginRequest)))
                 .andExpect(status().isBadRequest());

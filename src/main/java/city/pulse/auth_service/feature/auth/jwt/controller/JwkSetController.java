@@ -10,7 +10,7 @@ import city.pulse.auth_service.feature.auth.config.jwt.JwtConfig;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v${app.version}/auth")
 @RequiredArgsConstructor
 public class JwkSetController {
     private final JwtConfig jwtConfig;
