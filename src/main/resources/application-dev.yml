@@ -1,0 +1,9 @@
+app:
+  jwt:
+    access-token-ttl-ms: 900_000      #15 minutes
+    refresh-token-ttl-ms: 604_800_000 #1 week
+    iss: http://localhost:8080
+    key-id: key-1
+    keys:
+      private-key-path: classpath:keys/private.pem
+      public-key-path: classpath:keys/public.pem

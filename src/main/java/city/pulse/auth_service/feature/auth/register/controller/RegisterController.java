@@ -1,0 +1,27 @@
+package city.pulse.auth_service.feature.auth.register.controller;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import city.pulse.auth_service.feature.auth.register.dto.UserCreateDTO;
+import city.pulse.auth_service.feature.auth.register.dto.UserResponseDTO;
+import city.pulse.auth_service.feature.auth.register.service.RegisterService;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/auth")
+public class RegisterController {
+    private final RegisterService registerService;
+
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+        var created = registerService.createUser(userCreateDTO.getUsername(), userCreateDTO.getPassword(), userCreateDTO.getEmail());
+        var location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/api/v1/users/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(location).body(created);
+    }
+}

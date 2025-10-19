@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: Auth-Service
+
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:postgresql://ep-hidden-dream-ag2ndcap-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channelBinding=require
+    username: neondb_owner
+    password: npg_IQYD7tHMimq4
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: false
+
+server:
+  port: 8080
