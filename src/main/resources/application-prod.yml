@@ -1,7 +1,7 @@
 app:
-  version: @project.version@
+  version: v@project.version@
   jwt:
-    access-token-ttl-ms: 900_000        #15 minutes
+    access-token-ttl-ms: 900_000     #15 minutes
     refresh-token-ttl-ms: 2_419_200_000 #4 weeks
     iss: https://my-auth-service/
     key-id: key-1

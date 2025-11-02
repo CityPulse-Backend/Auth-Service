@@ -12,7 +12,7 @@ import city.pulse.auth_service.feature.auth.register.service.RegisterService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v${app.version}/auth")
+@RequestMapping("/api/${app.version}/auth")
 public class RegisterController {
     private final RegisterService registerService;
 
@@ -24,7 +24,7 @@ public class RegisterController {
         var created = registerService.createUser(userCreateDTO.getUsername(), userCreateDTO.getPassword(), userCreateDTO.getEmail());
         var location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/api/v" + appVersion + "/users/{id}")
+                .path("/api/" + appVersion + "/users/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }

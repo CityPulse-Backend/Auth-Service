@@ -14,7 +14,7 @@ import city.pulse.auth_service.feature.auth.login.service.LoginService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v${app.version}/auth")
+@RequestMapping("/api/${app.version}/auth")
 public class AuthController {
     private final LoginService loginService;
 
